@@ -3,4 +3,5 @@
     <string name="logs">Logs</string>
     <string name="result">Result</string>
     <string name="start">Start</string>
+    <string name="fetchAll">Fetch All</string>
 </resources>

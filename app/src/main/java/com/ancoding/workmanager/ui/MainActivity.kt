@@ -1,4 +1,5 @@
 package com.ancoding.workmanager.ui
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -10,17 +11,16 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.ancoding.workmanager.databinding.ActivityMainBinding
-import com.ancoding.workmanager.repository.LocationRepository
 import com.ancoding.workmanager.viewmodel.LocationViewModel
 import com.ancoding.workmanager.worker.LocationWorker
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
- import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val userViewModel by viewModel<LocationViewModel>()
+    private val viewModel by viewModel<LocationViewModel>()
 
     val workManager: WorkManager by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,14 +28,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         addOnClickListeners()
-        workManager.getWorkInfosByTagLiveData("LocationTag").observe(this) {
-                 userViewModel.getAll()
+
+        viewModel.getLocationLiveData().observe(this) { locations ->
+            locations.forEach {
+                binding.tvTotal.text =""+binding.tvTotal.text +"\n"+it.latitude+"-"+it.longitude
+            }
+
         }
     }
 
     private fun addOnClickListeners() {
         binding.btStart.setOnClickListener {
             if (isLocationPermissionGranted()) startTrackingLocation()
+        }
+        binding.btFetchAll.setOnClickListener {
+            viewModel.getAll()
         }
     }
 
