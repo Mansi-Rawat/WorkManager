@@ -14,6 +14,5 @@ class LocationRepository(var locationDao: LocationDao) {
     }
     suspend fun getAll(): List<Location> {
         return locationDao.getAll()
-
     }
 }

@@ -9,9 +9,16 @@ import kotlinx.coroutines.launch
 
 class LocationViewModel(var repository: LocationRepository) : ViewModel() {
 
+    v
+
     fun addLocation(location:Location) {
         CoroutineScope(Dispatchers.IO).launch {
             repository.addLocation(location)
         }
+    }
+      fun getAll():   {
+          CoroutineScope(Dispatchers.IO).launch {
+              repository.getAll()
+          }
     }
 }

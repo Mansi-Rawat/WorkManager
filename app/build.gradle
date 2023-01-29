@@ -52,31 +52,21 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-
     implementation "androidx.work:work-runtime-ktx:2.7.1"
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // ViewModel
-
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
-// LiveData
-
+    // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
-
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
-
     implementation "androidx.core:core-ktx:1.9.0"
 
     implementation "androidx.room:room-runtime:2.5.0"
     annotationProcessor "androidx.room:room-compiler:2.5.0"
-
+    implementation 'androidx.room:room-ktx:2.5.0'
     // To use Kotlin annotation processing tool (kapt)
     kapt "androidx.room:room-compiler:2.5.0"
-    implementation "org.koin:koin-android:3.2.0"
-    implementation 'org.koin:koin-androidx-viewmodel:3.2.0'
-    implementation 'org.koin:koin-androidx-scope:3.2.0'
     implementation "io.insert-koin:koin-android:3.2.0"
-
-
 }

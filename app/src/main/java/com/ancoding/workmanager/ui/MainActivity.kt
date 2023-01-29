@@ -1,6 +1,4 @@
 package com.ancoding.workmanager.ui
-
-
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -8,42 +6,31 @@ import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Observer
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.ancoding.workmanager.databinding.ActivityMainBinding
+import com.ancoding.workmanager.repository.LocationRepository
 import com.ancoding.workmanager.viewmodel.LocationViewModel
 import com.ancoding.workmanager.worker.LocationWorker
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
+ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val userViewModel by viewModel<LocationViewModel>()
-val workManager:WorkManager by inject()
+
+    val workManager: WorkManager by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         addOnClickListeners()
-        workManager.getWorkInfosByTagLiveData("LocationTag")
-            .observe(this, {
-                it[0].outputData
-            })
-       /* WorkManager.getInstance(applicationContext).getWorkInfosByTagLiveData("LocationTag").observe(this) {
-             CoroutineScope(Dispatchers.IO).launch {
-                val length = Room.databaseBuilder(
-                    applicationContext, LocationDataBase::class.java, "location"
-                ).build().locationDao().getAll().size.toString()
-                withContext(Dispatchers.Main) {
-                    binding.textView.text = length
-                }
-            }
+        workManager.getWorkInfosByTagLiveData("LocationTag").observe(this) {
+                 userViewModel.getAll()
         }
-*/
     }
 
     private fun addOnClickListeners() {
